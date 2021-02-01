@@ -1,0 +1,10 @@
+* {
+    box-sizing: border-box;
+    margin: 0;
+}
+
+header {
+    height: 50px;
+    width: 100%;
+    background-color: rgb(209, 209, 209);
+}
