@@ -1,10 +1,44 @@
 <!doctype html>
 <html>
 <head>
-    <title></title>
+    <title>My Imageboard</title>
+    <link rel="stylesheet" href="/css/style.css">
 </head>
 <body>
+
+<header>
+    <h1>MY IMAGEBOARD</h1>
+</header>
+
+
+<!-- This container is for our Vue instance! -->
+<!-- It will have access to our Vue code. -->
+<div id="main">
+    <form>
+        <input type="text" name="title" placeholder="title">
+        <input type="text" name="description" placeholder="description">
+        <input type="text" name="username" placeholder="username">
+        <input type="text" name="file" accept="image/*">
+        <button>Submit</button>
+    </form>
+
+
+    <div class="images-container">
+        <div class="imageBox" v-for="image in images">
+            <a @click.prevent id="imageAnchor">
+                <img :src="image.url">
+                <p>{{image.title}}</p>
+            </a>
+        </div>
+    </div>
+
+
+</div>
+
+
     <script src="/js/vue.js"></script>
     <script src="/js/axios.min.js"></script>
+    <!-- ORDER MATTERS! make sure script.js goes last -->
+    <script src="/js/script.js"></script>
 </body>
 </html>
