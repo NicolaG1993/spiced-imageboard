@@ -1,7 +1,6 @@
 const express = require("express");
 const app = express();
-const { getImages } = require("./sql/db"); //ho db?
-
+const { getImages } = require("./sql/db");
 app.use(express.static("public"));
 app.use(express.json());
 
