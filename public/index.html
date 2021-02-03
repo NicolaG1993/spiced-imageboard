@@ -14,7 +14,7 @@
 <!-- This container is for our Vue instance! -->
 <!-- It will have access to our Vue code. -->
 <div id="main">
-    <form>
+    <!-- <form>
         <input type="text" name="title" placeholder="title">
         <input type="text" name="description" placeholder="description">
         <input type="text" name="username" placeholder="username">
@@ -28,10 +28,18 @@
             <a @click.prevent id="imageAnchor">
                 <img :src="image.url">
                 <p>{{image.title}}</p>
+                
             </a>
         </div>
-    </div>
+    </div> -->
 
+    <div class="images-container">
+        <div class="imageBox" v-for="image in images">
+            <img :src="image.url">
+            <p>{{image.title}}</p>
+        </div>
+    </div>
+   
 
 </div>
 

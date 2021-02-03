@@ -1,5 +1,8 @@
 const spicedPg = require("spiced-pg");
-var db = spicedPg("postgres:spicedling:password@localhost:5432/imageboard");
+const db = spicedPg(
+    process.env.DATABASE_URL ||
+        "postgres:postgres:postgres@localhost:5432/imageboard"
+);
 
 module.exports.getImages = () => {
     const q = `SELECT * FROM images`;
