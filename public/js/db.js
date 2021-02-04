@@ -5,7 +5,7 @@ const db = spicedPg(
 );
 
 module.exports.getImages = () => {
-    const q = `SELECT * FROM images`;
+    const q = `SELECT * FROM images ORDER BY id DESC LIMIT 6`; //torna ordine inverso, limite di 6
     return db.query(q);
 };
 
