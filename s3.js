@@ -23,7 +23,7 @@ exports.upload = (req, res, next) => {
 
     const promise = s3
         .putObject({
-            Bucket: "buckbuckets", //spicedling if you're using spiced's credentials
+            Bucket: "spicedling", //spicedling if you're using spiced's credentials
             ACL: "public-read",
             Key: filename,
             Body: fs.createReadStream(path),

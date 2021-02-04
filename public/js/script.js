@@ -110,13 +110,14 @@ new Vue({
     methods: {
         clickHandler: function () {
             const fd = new FormData();
+            var self = this;
             fd.append("title", this.title);
             fd.append("description", this.description);
             fd.append("username", this.username);
             fd.append("file", this.file);
             axios
                 .post("/upload", fd)
-                .then((response) => console.log("response: ", response))
+                .then((response) => self.images.unshift(response.data)) //console.log("response: ", response)
                 .catch((err) => console.log("err: ", err));
         },
         fileSelectHandler: function (e) {

@@ -9,4 +9,10 @@ module.exports.getImages = () => {
     return db.query(q);
 };
 
+module.exports.uploadImage = (title, description, username, url) => {
+    const q = `INSERT INTO images (title, description, username, url) VALUES ($1, $2, $3, $4)`;
+    const keys = [title, description, username, url];
+    return db.query(q, keys);
+};
+
 // sudo service postgresql start

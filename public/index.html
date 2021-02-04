@@ -36,7 +36,7 @@
     </div> -->
 
     <div class="images-container">
-        <div class="imageBox" v-for="image in images">           
+        <div class="imageBox" v-for="image in images" @click.prevent>           
             <img :src="image.url">
             <p>{{image.title}}</p>   
         </div>
