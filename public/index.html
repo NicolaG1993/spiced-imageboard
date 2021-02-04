@@ -15,42 +15,28 @@
 <!-- It will have access to our Vue code. -->
 <div id="main">
 
-        <!-- not done -->
+       
     <modal-component
         v-if="selectedImage"
         v-bind:pictureid="selectedImage"
         @close="selectedImage=null"
     ></modal-component>
 
-    <!-- <form>
-        <input type="text" name="title" placeholder="title">
-        <input type="text" name="description" placeholder="description">
-        <input type="text" name="username" placeholder="username">
-        <input type="text" name="file" accept="image/*">
-        <button>Submit</button>
-    </form> -->
-    
-   
+    <comments-component
 
-<!-- 
-    <div class="images-container">
-        <div class="imageBox" v-for="image in images">
-            <a @click.prevent id="imageAnchor">
-                <img :src="image.url">
-                <p>{{image.title}}</p>
-                
-            </a>
-        </div>
-    </div> -->
-
-    <!-- @click="selectedImage=image.id" -->
+    ></comments-component>
 
     <div class="images-container">
-        <div class="imageBox" v-for="image in images" @click="selectedImage=image.id">          
+        <div class="imageBox" v-for="image in images" @click.prevent="selectedImage=image.id">          
             <img :src="image.url" :alt="image.title">
             <p>{{image.title}}</p>   
         </div>
     </div>
+
+    <div id="moreBtnContainer" v-if="moreBtn">
+        <button id="moreBtn" @click.prevent="getMoreImages">Load more images</button>
+    </div>
+    
 
     <div class="uploader-container">
         <input v-model="title" type="text" name="title" placeholder="title">
@@ -65,18 +51,21 @@
 
 <script id="modal-template" type="text/x-template">
     <div class="overlay">
-        <h1>HEY</h1>
-        <p>This is a component!!!</p>
-        <p @click="closeModal">CLOSE</p>
+        <p @click="closeModal">X</p>
 
         <div class="picture">
             <img :src="data.url" :alt="data.description">
             <h3>{{data.title}}</h3>
             <p>{{data.description}}</p>
+            <p>by: {{data.username}}</p>
+            <p>{{data.created_at}}</p>
         </div>
     </div>
 </script>
-   
+
+<script id="comments-template" type="text/x-template">
+    
+</script>
 
 
 

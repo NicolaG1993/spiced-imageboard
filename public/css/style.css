@@ -41,6 +41,18 @@ img {
     text-transform: uppercase;
 }
 
+#moreBtnContainer {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+#moreBtn {
+    margin: 20px;
+    padding: 5px;
+    border-radius: 20pt;
+}
+
 .overlay {
     position: absolute;
     height: 100%;

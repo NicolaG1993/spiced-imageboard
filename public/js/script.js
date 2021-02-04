@@ -88,6 +88,7 @@
             username: "",
             file: null,
             selectedImage: null,
+            moreBtn: false,
         },
 
         mounted: function () {
@@ -128,10 +129,13 @@
             // closeModal: function (e) {
             //     this.selectedImage = null; //now the if in html is falsy, so close the modal
             // }, // instead of creating a fn for it i just declare @close="selectedImage=null" in my html component
+            getMoreImages: function () {
+                var self = this;
+                console.log("this: ", this);
+            },
         },
     });
 
-    ////not done
     Vue.component("modal-component", {
         template: "#modal-template",
         data: function () {
@@ -159,4 +163,32 @@
             },
         },
     });
+
+    // Vue.component("comments-component", {
+    //     template: "#comments-template",
+    //     data: function () {
+    //         return {
+    //             data: [],
+    //         };
+    //     },
+    //     props: ["pictureid"],
+    //     mounted: function () {
+    //         console.log("pictureid: ", this.pictureid);
+    //         var self = this;
+    //         axios
+    //             .get(`/picture/${this.pictureid}`)
+    //             .then((response) => {
+    //                 console.log("response: ", response);
+    //                 console.log("response.data: ", response.data);
+    //                 self.data = response.data;
+    //             })
+    //             .catch((err) => console.log("err: ", err));
+    //     },
+    //     methods: {
+    //         closeModal: function () {
+    //             console.log("please close the modal!");
+    //             this.$emit("close");
+    //         },
+    //     },
+    // });
 })();

@@ -32,10 +32,7 @@ app.post("/upload", uploader.single("file"), s3.upload, (req, res) => {
         const url = `https://s3.amazonaws.com/spicedling/${req.file.filename}`;
 
         uploadImage(title, description, username, url)
-            .then(({ rows }) => {
-                res.json(rows[0]);
-                console.log("rows: ", rows);
-            }) //cos'é rows[0] ??? -> forse response.rows ?? ma cosa contiene??
+            .then(({ rows }) => res.json(rows[0])) //cos'é rows[0] -> é response.rows -> contiene title, descr, username, url
             .catch((err) => console.log("err with uploadImage: ", err));
     } else {
         res.json({ success: false });
