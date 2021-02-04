@@ -20,9 +20,11 @@
         <input type="text" name="username" placeholder="username">
         <input type="text" name="file" accept="image/*">
         <button>Submit</button>
-    </form>
+    </form> -->
+    
+   
 
-
+<!-- 
     <div class="images-container">
         <div class="imageBox" v-for="image in images">
             <a @click.prevent id="imageAnchor">
@@ -34,10 +36,18 @@
     </div> -->
 
     <div class="images-container">
-        <div class="imageBox" v-for="image in images">
+        <div class="imageBox" v-for="image in images">           
             <img :src="image.url">
-            <p>{{image.title}}</p>
+            <p>{{image.title}}</p>   
         </div>
+    </div>
+
+     <div class="uploader-container">
+        <input v-model="title" type="text" name="title" placeholder="title">
+        <input v-model="description" type="text" name="description" placeholder="description">
+        <input v-model="username" type="text" name="username" placeholder="username">
+        <input @change="fileSelectHandler" type="file" name="file" accept="image/*">
+        <button @click.prevent="clickHandler">Submit</button>
     </div>
    
 

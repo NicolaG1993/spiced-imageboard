@@ -103,9 +103,24 @@ new Vue({
                 self.images = response.data;
             })
             .catch(function (err) {
-                console.log("err in /cities: ", err);
+                console.log("err in /images: ", err);
             });
     },
 
-    methods: {},
+    methods: {
+        clickHandler: function () {
+            const fd = new FormData();
+            fd.append("title", this.title);
+            fd.append("description", this.description);
+            fd.append("username", this.username);
+            fd.append("file", this.file);
+            axios
+                .post("/upload", fd)
+                .then((response) => console.log("response: ", response))
+                .catch((err) => console.log("err: ", err));
+        },
+        fileSelectHandler: function (e) {
+            this.file = e.target.files[0];
+        },
+    },
 });
