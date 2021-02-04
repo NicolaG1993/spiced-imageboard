@@ -78,50 +78,85 @@
 //         },
 //     });
 // });
+(function () {
+    new Vue({
+        el: "#main",
+        data: {
+            images: [],
+            title: "",
+            description: "",
+            username: "",
+            file: null,
+            selectedImage: null,
+        },
 
-new Vue({
-    el: "#main",
-    data: {
-        images: [],
-        title: "",
-        description: "",
-        username: "",
-        file: null,
-    },
-
-    mounted: function () {
-        console.log("my vue instance has mounted");
-        console.log("this outside axios: ", this);
-        var self = this;
-
-        axios
-            .get("/images")
-            .then(function (response) {
-                console.log("this inside axios: ", self);
-                // axios will ALWAYS store the info coming from the server inside a 'data' property
-                console.log("response from /images: ", response.data);
-                self.images = response.data;
-            })
-            .catch(function (err) {
-                console.log("err in /images: ", err);
-            });
-    },
-
-    methods: {
-        clickHandler: function () {
-            const fd = new FormData();
+        mounted: function () {
+            console.log("my vue instance has mounted");
+            console.log("this outside axios: ", this);
             var self = this;
-            fd.append("title", this.title);
-            fd.append("description", this.description);
-            fd.append("username", this.username);
-            fd.append("file", this.file);
+
             axios
-                .post("/upload", fd)
-                .then((response) => self.images.unshift(response.data)) //console.log("response: ", response)
+                .get("/images")
+                .then(function (response) {
+                    console.log("this inside axios: ", self);
+                    // axios will ALWAYS store the info coming from the server inside a 'data' property
+                    console.log("response from /images: ", response.data);
+                    self.images = response.data;
+                })
+                .catch(function (err) {
+                    console.log("err in /images: ", err);
+                });
+        },
+
+        methods: {
+            //WHERE I STORE ALL MY FUNCTIONS
+            clickHandler: function () {
+                const fd = new FormData();
+                var self = this;
+                fd.append("title", this.title);
+                fd.append("description", this.description);
+                fd.append("username", this.username);
+                fd.append("file", this.file);
+                axios
+                    .post("/upload", fd)
+                    .then((response) => self.images.unshift(response.data)) //console.log("response: ", response)
+                    .catch((err) => console.log("err: ", err));
+            },
+            fileSelectHandler: function (e) {
+                this.file = e.target.files[0];
+            },
+            // closeModal: function (e) {
+            //     this.selectedImage = null; //now the if in html is falsy, so close the modal
+            // }, // instead of creating a fn for it i just declare @close="selectedImage=null" in my html component
+        },
+    });
+
+    ////not done
+    Vue.component("modal-component", {
+        template: "#modal-template",
+        data: function () {
+            return {
+                data: [],
+            };
+        },
+        props: ["pictureid"],
+        mounted: function () {
+            console.log("pictureid: ", this.pictureid);
+            var self = this;
+            axios
+                .get(`/picture/${this.pictureid}`)
+                .then((response) => {
+                    console.log("response: ", response);
+                    console.log("response.data: ", response.data);
+                    self.data = response.data;
+                })
                 .catch((err) => console.log("err: ", err));
         },
-        fileSelectHandler: function (e) {
-            this.file = e.target.files[0];
+        methods: {
+            closeModal: function () {
+                console.log("please close the modal!");
+                this.$emit("close");
+            },
         },
-    },
-});
+    });
+})();

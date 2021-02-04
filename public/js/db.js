@@ -5,12 +5,18 @@ const db = spicedPg(
 );
 
 module.exports.getImages = () => {
-    const q = `SELECT * FROM images ORDER BY id DESC LIMIT 6`; //torna ordine inverso, limite di 6
+    const q = `SELECT * FROM images ORDER BY id DESC LIMIT 6`; //torna ordine inverso, limite di 6 (limite non funziona!!)
     return db.query(q);
 };
 
+module.exports.getImageById = (id) => {
+    const q = `SELECT * FROM images WHERE id=$1`;
+    const key = [id];
+    return db.query(q, key);
+};
+
 module.exports.uploadImage = (title, description, username, url) => {
-    const q = `INSERT INTO images (title, description, username, url) VALUES ($1, $2, $3, $4)`;
+    const q = `INSERT INTO images (title, description, username, url) VALUES ($1, $2, $3, $4) RETURNING title, description, username, url`; //senza returnin non vedo l'immagine appena la carico, ma solo se ricarico la pagin
     const keys = [title, description, username, url];
     return db.query(q, keys);
 };

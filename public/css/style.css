@@ -9,6 +9,7 @@ header {
     height: 50px;
     width: 100%;
     background-color: rgb(209, 209, 209);
+    z-index: 5;
 }
 
 .images-container {
@@ -38,4 +39,13 @@ img {
     font-size: 20pt;
     font-weight: bold;
     text-transform: uppercase;
+}
+
+.overlay {
+    position: absolute;
+    height: 100%;
+    width: 100%;
+    top: 0;
+    background-color: rgba(255, 255, 255, 0.74);
+    z-index: 10;
 }

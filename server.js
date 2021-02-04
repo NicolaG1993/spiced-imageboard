@@ -1,6 +1,6 @@
 const express = require("express");
 const app = express();
-const { getImages, uploadImage } = require("./public/js/db");
+const { getImages, getImageById, uploadImage } = require("./public/js/db");
 const { uploader } = require("./public/js/upload");
 const s3 = require("./s3");
 app.use(express.static("public"));
@@ -32,11 +32,27 @@ app.post("/upload", uploader.single("file"), s3.upload, (req, res) => {
         const url = `https://s3.amazonaws.com/spicedling/${req.file.filename}`;
 
         uploadImage(title, description, username, url)
-            .then(({ rows }) => res.json(rows[0]))
+            .then(({ rows }) => {
+                res.json(rows[0]);
+                console.log("rows: ", rows);
+            }) //cos'é rows[0] ??? -> forse response.rows ?? ma cosa contiene??
             .catch((err) => console.log("err with uploadImage: ", err));
     } else {
         res.json({ success: false });
     }
+});
+
+app.get("/picture/:pictureid", (req, res) => {
+    console.log("/modal dynamic route has been hit!!!");
+    console.log("req.params: ", req.params);
+    let id = req.params.pictureid;
+
+    getImageById(id)
+        .then(({ rows }) => {
+            res.json(rows[0]);
+            console.log("rows: ", rows[0]);
+        })
+        .catch((err) => console.log("err with getImagesById: ", err));
 });
 
 app.get("/*", (req, res) => res.redirect("/"));

@@ -14,6 +14,14 @@
 <!-- This container is for our Vue instance! -->
 <!-- It will have access to our Vue code. -->
 <div id="main">
+
+        <!-- not done -->
+    <modal-component
+        v-if="selectedImage"
+        v-bind:pictureid="selectedImage"
+        @close="selectedImage=null"
+    ></modal-component>
+
     <!-- <form>
         <input type="text" name="title" placeholder="title">
         <input type="text" name="description" placeholder="description">
@@ -35,23 +43,42 @@
         </div>
     </div> -->
 
+    <!-- @click="selectedImage=image.id" -->
+
     <div class="images-container">
-        <div class="imageBox" v-for="image in images" @click.prevent>           
-            <img :src="image.url">
+        <div class="imageBox" v-for="image in images" @click="selectedImage=image.id">          
+            <img :src="image.url" :alt="image.title">
             <p>{{image.title}}</p>   
         </div>
     </div>
 
-     <div class="uploader-container">
+    <div class="uploader-container">
         <input v-model="title" type="text" name="title" placeholder="title">
         <input v-model="description" type="text" name="description" placeholder="description">
         <input v-model="username" type="text" name="username" placeholder="username">
         <input @change="fileSelectHandler" type="file" name="file" accept="image/*">
         <button @click.prevent="clickHandler">Submit</button>
     </div>
-   
 
 </div>
+     
+
+<script id="modal-template" type="text/x-template">
+    <div class="overlay">
+        <h1>HEY</h1>
+        <p>This is a component!!!</p>
+        <p @click="closeModal">CLOSE</p>
+
+        <div class="picture">
+            <img :src="data.url" :alt="data.description">
+            <h3>{{data.title}}</h3>
+            <p>{{data.description}}</p>
+        </div>
+    </div>
+</script>
+   
+
+
 
 
     <script src="/js/vue.js"></script>
