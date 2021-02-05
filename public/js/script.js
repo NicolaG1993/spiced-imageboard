@@ -87,7 +87,8 @@
             description: "",
             username: "",
             file: null,
-            selectedImage: null,
+            selectedImage: location.hash.slice(1),
+            id: "",
             moreBtn: true,
             lowestId: 0,
         },
@@ -96,6 +97,11 @@
             console.log("my vue instance has mounted");
             console.log("this outside axios: ", this);
             var self = this;
+
+            addEventListener("hashchange", () => {
+                console.log("hash has changed: ", location.hash);
+                this.selectedImage = location.hash.slice(1);
+            });
 
             axios
                 .get("/images")
@@ -150,7 +156,6 @@
                         for (let i = 0; i < response.data.length; i++) {
                             if (
                                 response.data[i].id === response.data[i].lastId
-                                //o se array.lenght < 6 ???
                             ) {
                                 this.moreBtn = false;
                             }
@@ -159,6 +164,12 @@
                     })
                     .catch((err) => console.log("err: ", err));
             },
+            // showModalMethod: function (img) {
+            //     this.selectedImage = img;
+            // },
+            // closeModalOnParent: function () {
+            //     this.selectedImage = null;
+            // },
         },
     });
 
@@ -183,10 +194,25 @@
                 })
                 .catch((err) => console.log("err: ", err));
         },
+        watch: {
+            // done
+            pictureid: function () {
+                var self = this;
+                console.log("modal should show a new image");
+                axios
+                    .get(`/picture/${this.pictureid}`)
+                    .then((response) => {
+                        self.data = response.data;
+                    })
+                    .catch((err) => console.log("err: ", err));
+            },
+        },
         methods: {
             closeModal: function () {
                 console.log("please close the modal!");
                 this.$emit("close");
+                this.selectedImage = null;
+                history.pushState({}, "", "/"); //per elimnare # nell url quando chiudo modal
             },
         },
     });
@@ -209,13 +235,25 @@
                 .then((response) => {
                     console.log("response: ", response);
                     console.log("self: ", self);
-                    //not done
                     self.comments = response.data;
                 })
                 .catch((err) => console.log("err: ", err));
         },
+        watch: {
+            // done
+            image_id: function () {
+                var self = this;
+                axios
+                    .get(`/comments/${this.image_id}`)
+                    .then((response) => {
+                        console.log("response: ", response);
+                        console.log("self: ", self);
+                        self.comments = response.data;
+                    })
+                    .catch((err) => console.log("err: ", err));
+            },
+        },
         methods: {
-            //not done
             postComment: function () {
                 console.log("please submit the comment!");
                 console.log("this: ", this);

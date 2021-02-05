@@ -69,4 +69,12 @@ img {
     position: absolute;
     bottom: 0;
     z-index: 15;
+    padding: 10px;
+}
+
+.comment {
+    background-color: whitesmoke;
+    margin-top: 5px;
+    border-radius: 5pt;
+    padding: 5px;
 }

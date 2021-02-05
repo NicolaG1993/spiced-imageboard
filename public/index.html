@@ -25,9 +25,12 @@
 
 
     <div class="images-container">
-        <div class="imageBox" v-for="image in images" @click.prevent="selectedImage=image.id">          
-            <img :src="image.url" :alt="image.title">
-            <p>{{image.title}}</p>   
+        <div class="imageBox" v-for="image in images">   
+             <!-- @click.prevent="selectedImage=image.id" -->
+            <a :href="'#'+ image.id">      
+                <img :src="image.url" :alt="image.title">
+                <p>{{image.title}}</p>   
+            </a> 
         </div>
     </div>
 
@@ -55,11 +58,10 @@
             <img :src="data.url" :alt="data.description">
             <h3>{{data.title}}</h3>
             <p>{{data.description}}</p>
-            <p>by: {{data.username}}</p>
+            <p>uploaded by: {{data.username}}</p>
             <p>{{data.created_at}}</p>
         </div>
 
-        <!-- or pictureid="selectedImage" -->
         <comments-component
         v-bind:image_id="pictureid"       
     ></comments-component>
@@ -79,6 +81,7 @@
         <div class="commentsBox" v-for="comment in comments">
             <div class="comment">
                 <p>{{comment.username}}</p>
+                <span><p>{{comment.created_at}}</p></span>
                 <p>{{comment.text}}</p>
             </div>
         </div>

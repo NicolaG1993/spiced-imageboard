@@ -87,11 +87,11 @@ app.get("/comments/:pictureid", (req, res) => {
 app.post("/comments", (req, res) => {
     //not done
     console.log("req.body: ", req.body);
-    const text = req.body.comment;
+    const comment = req.body.comment;
     const username = req.body.username;
     const image_id = req.body.image_id;
 
-    postComment(text, username, image_id)
+    postComment(comment, username, image_id)
         .then(({ rows }) => {
             console.log("rows (postComment): ", rows);
             res.json(rows[0]);
