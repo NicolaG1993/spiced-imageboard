@@ -1,13 +1,15 @@
 <!doctype html>
-<html>
+<html lang="en" dir="ltr">
 <head>
+     <meta charset="utf-8" />
     <title>My Imageboard</title>
     <link rel="stylesheet" href="/css/style.css">
+    <meta name="viewport" content="width=device-width, initial-scale=1"/>
 </head>
 <body>
 
 <header>
-    <h1>MY IMAGEBOARD</h1>
+    <h1>EPIC WALLPAPERS</h1>
 </header>
 
 
@@ -28,9 +30,10 @@
         <div class="imageBox" v-for="image in images">   
              <!-- @click.prevent="selectedImage=image.id" -->
             <a :href="'#'+ image.id">      
-                <img :src="image.url" :alt="image.title">
-                <p>{{image.title}}</p>   
-            </a> 
+                <img class="imagePreview" :src="image.url" :alt="image.title">
+                 
+            </a>
+            <p class="picTitle">{{image.title}}</p>   
         </div>
     </div>
 
@@ -52,13 +55,14 @@
 
 <script id="modal-template" type="text/x-template">
     <div class="overlay">
-        <p @click="closeModal">X</p>
+        <div class="modal">
+        <p id="closeBtn" @click="closeModal">X</p>
 
-        <div class="picture">
-            <img :src="data.url" :alt="data.description">
+        <div class="pictureBox">
+            <img class="picture" :src="data.url" :alt="data.description">
             <h3>{{data.title}}</h3>
             <p>{{data.description}}</p>
-            <p>uploaded by: {{data.username}}</p>
+            <p>uploaded by: </p><p>{{data.username}}</p>
             <p>{{data.created_at}}</p>
         </div>
 
@@ -66,9 +70,9 @@
         v-bind:image_id="pictureid"       
     ></comments-component>
     </div>
+    </div>
 </script>
 
-<!-- not done -->
 <script id="comments-template" type="text/x-template">
     <div class="comments-container">
 
@@ -80,9 +84,9 @@
 
         <div class="commentsBox" v-for="comment in comments">
             <div class="comment">
-                <p>{{comment.username}}</p>
-                <span><p>{{comment.created_at}}</p></span>
-                <p>{{comment.text}}</p>
+                <p class="cUsername">{{comment.username}}</p>
+                <p class="cTime">{{comment.created_at}}</p>
+                <p class="cText">{{comment.text}}</p>
             </div>
         </div>
 

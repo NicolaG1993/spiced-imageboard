@@ -275,3 +275,11 @@
         },
     });
 })();
+
+/*
+1) time format
+2) layout design
+3) mobile resposive
+4) reset db and upload new imgs
+5) clear input fields after post req
+*/

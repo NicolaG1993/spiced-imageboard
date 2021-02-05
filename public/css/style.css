@@ -5,41 +5,113 @@
     font-family: Helvetica, sans-serif;
 }
 
+/* width */
+::-webkit-scrollbar {
+    width: 15px;
+}
+/* Handle */
+::-webkit-scrollbar-thumb {
+    background: rgb(180, 180, 180);
+
+    border-radius: 15px;
+}
+/* Handle on hover */
+::-webkit-scrollbar-thumb:hover {
+    background: rgb(248, 248, 248);
+}
+/* Track */
+::-webkit-scrollbar-track {
+    background: rgb(209, 209, 209);
+}
+
+button {
+    cursor: pointer;
+}
+
+a {
+    cursor: pointer;
+    text-decoration: none;
+    font-weight: bold;
+}
+
 header {
-    height: 50px;
+    position: fixed;
+    top: 0;
     width: 100%;
+    padding: 5px 5px 10px 5px;
     background-color: rgb(209, 209, 209);
     z-index: 5;
 }
 
+.uploader-container {
+    position: fixed;
+    bottom: 0;
+    width: 100%;
+    padding: 10px 5px;
+    background-color: rgb(209, 209, 209);
+    z-index: 5;
+}
+
+/*IMAGES*/
 .images-container {
     display: inline-grid;
     grid-template-columns: 1fr 1fr 1fr;
+    margin-top: 50px;
 }
 
 .imageBox {
     max-height: 300px;
     overflow-y: hidden;
     cursor: pointer;
+    transition: 0.5s ease;
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }
 
-img {
+.imageBox > a {
+    max-height: 300px;
+    overflow: hidden;
+}
+
+.imagePreview {
     object-fit: cover;
     object-position: center;
     max-height: 300px;
     /* limite solo per standard desktop */
+    transition: 1.5s ease;
+    vertical-align: middle;
 }
 
-.imageBox > p {
-    position: relative;
-    top: -50%;
+.picTitle {
+    position: absolute;
+    /* top: -50%;
     left: 50%;
-    transform: translateX(-50%) translateY(-50%);
+    transform: translateX(-50%) translateY(-50%); */
     text-align: center;
     font-size: 20pt;
     font-weight: bold;
     text-transform: uppercase;
+    color: whitesmoke;
+    opacity: 0%;
+    transition: 0.5s ease;
+    z-index: 7;
 }
+
+.imageBox:hover {
+    filter: grayscale(100%);
+}
+
+.imageBox:hover > .picTitle {
+    opacity: 100%;
+}
+
+.imageBox:hover > a > img {
+    opacity: 100%;
+    max-height: 310px;
+}
+
+/*MORE BTN*/
 
 #moreBtnContainer {
     display: flex;
@@ -49,27 +121,91 @@ img {
 
 #moreBtn {
     margin: 20px;
-    padding: 5px;
+    padding: 10px 20px;
     border-radius: 20pt;
+    border: 3pt solid black;
+    background-color: transparent;
+    font-weight: 900;
+    transition: 0.5s ease;
 }
 
+#moreBtn:hover {
+    color: ghostwhite;
+    background-color: black;
+}
+
+/*MODAL-COMPONENT*/
+
 .overlay {
-    position: absolute;
-    height: 100%;
+    position: fixed;
+    min-height: 100%;
     width: 100%;
-    top: 0;
-    background-color: rgba(255, 255, 255, 0.74);
+    bottom: 0;
+    background-color: rgba(36, 36, 36, 0.74);
     z-index: 10;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.modal {
+    position: absolute;
+    max-width: 75%;
+    min-height: 100%;
+    background-color: rgb(39, 39, 39);
+    padding: 15px;
+}
+
+#closeBtn {
+    font-size: 20pt;
+    color: whitesmoke;
+    position: fixed;
+    top: 1%;
+    right: 3%;
+    cursor: pointer;
+}
+
+.pictureBox {
+    margin-bottom: 50px;
+    color: whitesmoke;
+}
+
+.picture {
+    margin: 30px 0 20px 0;
+    max-height: 60vh;
+}
+
+.pictureBox > p:nth-child(4) {
+    float: left;
+    margin-right: 5px;
+}
+
+.pictureBox > p:nth-child(5) {
+    font-weight: bold;
+}
+
+.pictureBox > p:nth-child(6) {
+    clear: both;
 }
 
 .comments-container {
-    height: 200px;
-    width: 300px;
-    background-color: turquoise;
-    position: absolute;
-    bottom: 0;
-    z-index: 15;
-    padding: 10px;
+    width: 100%;
+    /* background-color: rgb(209, 209, 209);
+    padding: 5pt;
+    border-radius: 5px; */
+}
+
+.submit-container {
+    margin-bottom: 5px;
+}
+
+.submit-container > input[type="text"]:nth-child(1) {
+    width: 20%;
+}
+
+.submit-container > input[type="text"]:nth-child(2) {
+    width: 70%;
 }
 
 .comment {
@@ -77,4 +213,53 @@ img {
     margin-top: 5px;
     border-radius: 5pt;
     padding: 5px;
+}
+
+.cUsername {
+    float: left;
+    font-weight: bold;
+}
+.cTime {
+    padding-left: 10px;
+    line-height: 15pt;
+    font-size: 9pt;
+    color: rgba(0, 0, 0, 0.479);
+}
+.cText {
+    clear: both;
+    margin-top: 5px;
+}
+
+/*MEDIA QUERYS*/
+@media screen and (max-width: 600px) {
+    .images-container {
+        /* display: inline-grid; */
+        grid-template-columns: 1fr;
+    }
+    .imagePreview {
+        min-height: 300px;
+        width: 100%;
+    }
+    .uploader-container {
+        position: relative;
+    }
+}
+
+@media screen and (min-width: 1050px) {
+    .imageBox {
+        max-height: 500px;
+    }
+
+    .imageBox > a {
+        max-height: 500px;
+    }
+
+    .imagePreview {
+        min-height: 450px;
+        width: 100%;
+    }
+    .imageBox:hover > a > img {
+        max-height: auto;
+        width: 105%;
+    }
 }
