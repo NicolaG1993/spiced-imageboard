@@ -22,10 +22,7 @@
         @close="selectedImage=null"
     ></modal-component>
 
-    <comments-component
-        v-if="selectedImage"
-        v-bind:pictureid="selectedImage"
-    ></comments-component>
+
 
     <div class="images-container">
         <div class="imageBox" v-for="image in images" @click.prevent="selectedImage=image.id">          
@@ -61,6 +58,11 @@
             <p>by: {{data.username}}</p>
             <p>{{data.created_at}}</p>
         </div>
+
+        <!-- or pictureid="selectedImage" -->
+        <comments-component
+        v-bind:image_id="pictureid"       
+    ></comments-component>
     </div>
 </script>
 
@@ -71,13 +73,13 @@
         <div class="submit-container">
             <input v-model="username" type="text" name="username" placeholder="username">
             <input v-model="comment" type="text" name="comment" placeholder="Your comment...">
-            <button id="submitBtn" @click.prevent="postComment">Submit</button>
+            <button id="submitBtn" @click="postComment">Submit</button>
         </div>
 
         <div class="commentsBox" v-for="comment in comments">
             <div class="comment">
-                <p>{{data.username}}</p>
-                <p>{{data.text}}</p>
+                <p>{{comment.username}}</p>
+                <p>{{comment.text}}</p>
             </div>
         </div>
 

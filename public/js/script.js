@@ -200,17 +200,17 @@
                 comment: "",
             };
         },
-        props: ["pictureid"],
+        props: ["image_id"],
         mounted: function () {
-            console.log("pictureid from comments-component: ", this.pictureid);
+            console.log("image_id from comments-component: ", this.image_id);
             var self = this;
             axios
-                .get(`/comments/${this.pictureid}`)
+                .get(`/comments/${this.image_id}`)
                 .then((response) => {
                     console.log("response: ", response);
                     console.log("self: ", self);
                     //not done
-                    self.data = response.data;
+                    self.comments = response.data;
                 })
                 .catch((err) => console.log("err: ", err));
         },
@@ -218,10 +218,20 @@
             //not done
             postComment: function () {
                 console.log("please submit the comment!");
+                console.log("this: ", this);
+                let obj = {
+                    comment: this.comment,
+                    username: this.username,
+                    created_at: this.created_at,
+                    image_id: this.image_id,
+                };
 
                 axios
-                    .post(`/comments/${this.pictureid}`, {})
-                    .then()
+                    .post(`/comments`, obj) //forse non dynamic qua
+                    .then((response) => {
+                        console.log("response.data: ", response.data);
+                        this.comments.push(response.data);
+                    })
                     .catch((err) => console.log("err: ", err));
             },
         },

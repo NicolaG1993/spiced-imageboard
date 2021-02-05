@@ -84,14 +84,17 @@ app.get("/comments/:pictureid", (req, res) => {
         .catch((err) => console.log("err with getImagesById: ", err));
 });
 
-app.post("/comments/:pictureid", (req, res) => {
+app.post("/comments", (req, res) => {
     //not done
-    const text = req.body.text;
+    console.log("req.body: ", req.body);
+    const text = req.body.comment;
     const username = req.body.username;
+    const image_id = req.body.image_id;
 
-    postComment(text, username)
+    postComment(text, username, image_id)
         .then(({ rows }) => {
             console.log("rows (postComment): ", rows);
+            res.json(rows[0]);
         })
         .catch((err) => console.log("err with postComment: ", err));
 });

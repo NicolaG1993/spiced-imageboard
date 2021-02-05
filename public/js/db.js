@@ -34,16 +34,15 @@ module.exports.uploadImage = (title, description, username, url) => {
     return db.query(q, keys);
 };
 
-//not done
 module.exports.getCommentsById = (id) => {
     const q = `SELECT * FROM comments WHERE image_id=$1`;
     const key = [id];
     return db.query(q, key);
 };
-//not done
-module.exports.postComment = (text, username) => {
-    const q = `INSERT INTO comments (text, username) VALUES ($1, $2)`;
-    const keys = [text, username];
+
+module.exports.postComment = (text, username, image_id) => {
+    const q = `INSERT INTO comments (text, username, image_id) VALUES ($1, $2, $3) RETURNING *`;
+    const keys = [text, username, image_id];
     return db.query(q, keys);
 };
 
