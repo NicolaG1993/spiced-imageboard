@@ -5,6 +5,8 @@ const {
     getImageById,
     uploadImage,
     getMoreImages,
+    getCommentsById,
+    postComment,
 } = require("./public/js/db");
 const { uploader } = require("./public/js/upload");
 const s3 = require("./s3");
@@ -24,7 +26,7 @@ app.get("/load-more/:lastId", (req, res) => {
     console.log("req.params: ", req.params);
     getMoreImages(req.params.lastId)
         .then(({ rows }) => {
-            console.log("rows: ", rows);
+            console.log("rows (getMoreImages): ", rows);
             res.json(rows);
         })
         .catch((err) => console.log("err with getMoreImages: ", err));
@@ -63,9 +65,35 @@ app.get("/picture/:pictureid", (req, res) => {
     getImageById(id)
         .then(({ rows }) => {
             res.json(rows[0]);
-            console.log("rows: ", rows[0]);
+            console.log("rows (getImageById): ", rows[0]);
         })
         .catch((err) => console.log("err with getImagesById: ", err));
+});
+
+app.get("/comments/:pictureid", (req, res) => {
+    console.log("/comments dynamic route has been hit!!!");
+    console.log("req.params: ", req.params);
+    let id = req.params.pictureid;
+
+    getCommentsById(id)
+        //not done
+        .then(({ rows }) => {
+            res.json(rows);
+            console.log("rows (getCommentsById): ", rows); //or rows[0]
+        })
+        .catch((err) => console.log("err with getImagesById: ", err));
+});
+
+app.post("/comments/:pictureid", (req, res) => {
+    //not done
+    const text = req.body.text;
+    const username = req.body.username;
+
+    postComment(text, username)
+        .then(({ rows }) => {
+            console.log("rows (postComment): ", rows);
+        })
+        .catch((err) => console.log("err with postComment: ", err));
 });
 
 app.get("/*", (req, res) => res.redirect("/"));

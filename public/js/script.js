@@ -104,6 +104,10 @@
                     // axios will ALWAYS store the info coming from the server inside a 'data' property
                     console.log("response from /images: ", response.data);
                     self.images = response.data;
+
+                    if (response.data.length < 6) {
+                        self.moreBtn = false;
+                    }
                 })
                 .catch(function (err) {
                     console.log("err in /images: ", err);
@@ -119,6 +123,7 @@
                 fd.append("description", this.description);
                 fd.append("username", this.username);
                 fd.append("file", this.file);
+
                 axios
                     .post("/upload", fd)
                     .then((response) => self.images.unshift(response.data)) //console.log("response: ", response)
@@ -145,6 +150,7 @@
                         for (let i = 0; i < response.data.length; i++) {
                             if (
                                 response.data[i].id === response.data[i].lastId
+                                //o se array.lenght < 6 ???
                             ) {
                                 this.moreBtn = false;
                             }
@@ -167,6 +173,7 @@
         mounted: function () {
             console.log("pictureid: ", this.pictureid);
             var self = this;
+
             axios
                 .get(`/picture/${this.pictureid}`)
                 .then((response) => {
@@ -184,31 +191,39 @@
         },
     });
 
-    // Vue.component("comments-component", {
-    //     template: "#comments-template",
-    //     data: function () {
-    //         return {
-    //             data: [],
-    //         };
-    //     },
-    //     props: ["pictureid"],
-    //     mounted: function () {
-    //         console.log("pictureid: ", this.pictureid);
-    //         var self = this;
-    //         axios
-    //             .get(`/picture/${this.pictureid}`)
-    //             .then((response) => {
-    //                 console.log("response: ", response);
-    //                 console.log("response.data: ", response.data);
-    //                 self.data = response.data;
-    //             })
-    //             .catch((err) => console.log("err: ", err));
-    //     },
-    //     methods: {
-    //         closeModal: function () {
-    //             console.log("please close the modal!");
-    //             this.$emit("close");
-    //         },
-    //     },
-    // });
+    Vue.component("comments-component", {
+        template: "#comments-template",
+        data: function () {
+            return {
+                comments: [],
+                username: "",
+                comment: "",
+            };
+        },
+        props: ["pictureid"],
+        mounted: function () {
+            console.log("pictureid from comments-component: ", this.pictureid);
+            var self = this;
+            axios
+                .get(`/comments/${this.pictureid}`)
+                .then((response) => {
+                    console.log("response: ", response);
+                    console.log("self: ", self);
+                    //not done
+                    self.data = response.data;
+                })
+                .catch((err) => console.log("err: ", err));
+        },
+        methods: {
+            //not done
+            postComment: function () {
+                console.log("please submit the comment!");
+
+                axios
+                    .post(`/comments/${this.pictureid}`, {})
+                    .then()
+                    .catch((err) => console.log("err: ", err));
+            },
+        },
+    });
 })();

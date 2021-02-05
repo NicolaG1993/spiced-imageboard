@@ -61,3 +61,12 @@ img {
     background-color: rgba(255, 255, 255, 0.74);
     z-index: 10;
 }
+
+.comments-container {
+    height: 200px;
+    width: 300px;
+    background-color: turquoise;
+    position: absolute;
+    bottom: 0;
+    z-index: 15;
+}
