@@ -1,6 +1,11 @@
 const express = require("express");
 const app = express();
-const { getImages, getImageById, uploadImage } = require("./public/js/db");
+const {
+    getImages,
+    getImageById,
+    uploadImage,
+    getMoreImages,
+} = require("./public/js/db");
 const { uploader } = require("./public/js/upload");
 const s3 = require("./s3");
 app.use(express.static("public"));
@@ -12,6 +17,17 @@ app.get("/images", (req, res) => {
     getImages()
         .then(({ rows }) => res.json(rows))
         .catch((err) => console.log("err with getImages: ", err));
+});
+
+app.get("/load-more/:lastId", (req, res) => {
+    console.log("/load-more route has been hit!!!");
+    console.log("req.params: ", req.params);
+    getMoreImages(req.params.lastId)
+        .then(({ rows }) => {
+            console.log("rows: ", rows);
+            res.json(rows);
+        })
+        .catch((err) => console.log("err with getMoreImages: ", err));
 });
 
 // app.post("/upload", uploader.single("file"), s3.upload, (req, res) => {

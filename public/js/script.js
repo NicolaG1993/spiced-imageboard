@@ -88,7 +88,8 @@
             username: "",
             file: null,
             selectedImage: null,
-            moreBtn: false,
+            moreBtn: true,
+            lowestId: 0,
         },
 
         mounted: function () {
@@ -132,6 +133,25 @@
             getMoreImages: function () {
                 var self = this;
                 console.log("this: ", this);
+                const lastPicIndex = this.images.length - 1;
+                const lastPicID = this.images[lastPicIndex].id; // ultimo oggetto nell'array // la mia ultima img
+                console.log("lastPicID: ", lastPicID);
+                this.lowestId = lastPicID;
+
+                axios
+                    .get(`/load-more/${lastPicID}`)
+                    .then((response) => {
+                        console.log("response.data: ", response.data);
+                        for (let i = 0; i < response.data.length; i++) {
+                            if (
+                                response.data[i].id === response.data[i].lastId
+                            ) {
+                                this.moreBtn = false;
+                            }
+                        }
+                        self.images.push(...response.data);
+                    })
+                    .catch((err) => console.log("err: ", err));
             },
         },
     });
